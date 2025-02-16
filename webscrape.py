@@ -32,6 +32,8 @@ class CompstatBookInfo:
 
             major_col_lbl = self.table.find_element(By.XPATH, f'./kendo-grid/div/div/div[2]/table/thead/tr/th[{(col_index + 1) // 3  * 3 -1}]').text
 
+            self.col_lbls[f"{col.text} {major_col_lbl}"] = col_index
+        print(self.col_lbls)
         #map of rows and their corrisponding labels
         self.row_lbls = {}
 
@@ -40,7 +42,43 @@ class CompstatBookInfo:
                 row_index = int(row.get_attribute('aria-rowindex'))
                 self.row_lbls[row.text] = row_index
 
-        print(self.row_lbls)
+
+        self.table_entries = {}
+        for row in table_rows[1:]:
+            rowindex = int(row.get_attribute('aria-rowindex'))
+            self.table_entries[rowindex] = self.get_row_map(row)
+
+
+
+    def get_row_map(self, row):
+        row_map = {}
+        for element in row.find_elements(By.XPATH, './child::*'):
+            row_map[int(element.get_attribute('aria-colindex'))] = {
+                'text': element.text.replace(',',''),
+                'element': element
+            }
+        return row_map
+
+    def get_value(self, row, column, attribute):
+        return self.table_entries[self.row_lbls[row]][self.col_lbls[column]][attribute]
+
+    def get_crime_piechart(self, rows, column):
+        values = list(map(lambda x: int(get_value(x, column, 'text', self.table_entries)), rows))
+        fig = plt.figure()
+        ax = fig.add_subplot()
+        ax.pie(values, labels = rows)
+        return fig
+
+    def update_circle_positions(self, row, column):
+        element = self.get_value(row, column, 'element')
+        element.click()
+        time.sleep(.5)
+        print(element.get_attribute('aria-selected'))
+        map = self.driver.find_element(By.XPATH, '/html/body/app-root/div[1]/app-home/div/div/app-report[2]/div/div[2]/kendo-map/div/div[1]/div[2]/div[3]/child::*')
+        circles = map.find_elements(By.XPATH, './child::*')[2:]
+        print(len(circles))
+        return
+
 
 
 
@@ -97,8 +135,7 @@ if __name__ == "__main__":
 
     cs_info = CompstatBookInfo(driver, "/html/body/app-root/div[1]/app-home/div/div/app-report[1]" )
 
-    print(cs_info.week)
-
+    cs_info.update_circle_positions('Rape', '2025 Week to Date')
     exit()
 
     cs_book = driver.find_element(By.XPATH, "/html/body/app-root/div[1]/app-home/div/div/app-report[1]")
