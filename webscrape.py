@@ -4,6 +4,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import json
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 
@@ -33,7 +35,6 @@ class CompstatBookInfo:
             major_col_lbl = self.table.find_element(By.XPATH, f'./kendo-grid/div/div/div[2]/table/thead/tr/th[{(col_index + 1) // 3  * 3 -1}]').text
 
             self.col_lbls[f"{col.text} {major_col_lbl}"] = col_index
-        print(self.col_lbls)
         #map of rows and their corrisponding labels
         self.row_lbls = {}
 
@@ -68,56 +69,33 @@ class CompstatBookInfo:
         ax = fig.add_subplot()
         ax.pie(values, labels = rows)
         return fig
-
+    
+    # cirlce positions are inconsistent 
     def update_circle_positions(self, row, column):
         element = self.get_value(row, column, 'element')
         element.click()
         time.sleep(.5)
-        print(element.get_attribute('aria-selected'))
         map = self.driver.find_element(By.XPATH, '/html/body/app-root/div[1]/app-home/div/div/app-report[2]/div/div[2]/kendo-map/div/div[1]/div[2]/div[3]/child::*')
         circles = map.find_elements(By.XPATH, './child::*')[2:]
-        print(len(circles))
-        return
+        self.table_entries[self.row_lbls[row]][self.col_lbls[column]]['circle_positions'] = []
+        for circle in circles:
+            print(f'x: {circle.get_attribute('cx')}')
+            print(f'y: {circle.get_attribute('cy')}')
+            print(get_xpath(circle))
+            x = float(circle.get_attribute('cx'))
+            y = float(circle.get_attribute('cy'))
+            self.table_entries[self.row_lbls[row]][self.col_lbls[column]]['circle_positions'].append([x, y])
+
+    def quit(self):
+        self.driver.quit()
 
 
 
 
 
-
-
-
-
-
-def get_row_map(row):
-    row_map = {}
-    for element in row.find_elements(By.XPATH, './child::*'):
-        row_map[int(element.get_attribute('aria-colindex'))] = {
-            'text': element.text.replace(',',''),
-            'element': element
-        }
-    return row_map
-
-def get_value(row, column, attribute, table_entries):
-    return table_entries[row_lbls[row]][col_lbls[column]][attribute]
-
-def get_crime_piechart(rows, column, table_entries):
-    values = list(map(lambda x: int(get_value(x, column, 'text', table_entries)), rows))
-    fig = plt.figure()
-    ax = fig.add_subplot()
-    ax.pie(values, labels = rows)
-    return fig
-
-def update_circle_positions(row, column, table_entries, driver):
-    element = get_value(row, column, 'element', table_entries)
-    element.click()
-    time.sleep(.5)
-    print(element.get_attribute('aria-selected'))
-    map = driver.find_element(By.XPATH, '/html/body/app-root/div[1]/app-home/div/div/app-report[2]/div/div[2]/kendo-map/div/div[1]/div[2]/div[3]/child::*')
-    circles = map.find_elements(By.XPATH, './child::*')[2:]
-    print(len(circles))
-    return
-
-
+def process_browser_log_entry(entry):
+        response = json.loads(entry['message'])['message']
+        return response
 
 
 if __name__ == "__main__":
@@ -128,14 +106,24 @@ if __name__ == "__main__":
     options.add_argument('--headless=new')
     options.add_argument("--window-size=1920,1200")  # Set the window size
 
+    caps = DesiredCapabilities.CHROME
+    caps['goog:loggingPrefs'] = {'performance': 'ALL'}
 
-    driver = webdriver.Chrome(options=options)
+
+    driver = webdriver.Chrome(options=options, desired_capabilities=caps)
 
     driver.get('https://compstat.nypdonline.org/');
 
     cs_info = CompstatBookInfo(driver, "/html/body/app-root/div[1]/app-home/div/div/app-report[1]" )
 
-    cs_info.update_circle_positions('Rape', '2025 Week to Date')
+    cs_info.update_circle_positions('Murder', '2025 Week to Date')
+
+    browser_log = driver.get_log('performance') 
+    events = [process_browser_log_entry(entry) for entry in browser_log]
+    events = [event for event in events if 'Network.response' in event['method']]
+
+    cs_info.quit()
+
     exit()
 
     cs_book = driver.find_element(By.XPATH, "/html/body/app-root/div[1]/app-home/div/div/app-report[1]")
@@ -199,3 +187,34 @@ if __name__ == "__main__":
     update_circle_positions('Rape', '2025 Week to Date', table_entries, driver)
 
     driver.quit()
+
+
+
+def get_row_map(row):
+    row_map = {}
+    for element in row.find_elements(By.XPATH, './child::*'):
+        row_map[int(element.get_attribute('aria-colindex'))] = {
+            'text': element.text.replace(',',''),
+            'element': element
+        }
+    return row_map
+
+def get_value(row, column, attribute, table_entries):
+    return table_entries[row_lbls[row]][col_lbls[column]][attribute]
+
+def get_crime_piechart(rows, column, table_entries):
+    values = list(map(lambda x: int(get_value(x, column, 'text', table_entries)), rows))
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.pie(values, labels = rows)
+    return fig
+
+def update_circle_positions(row, column, table_entries, driver):
+    element = get_value(row, column, 'element', table_entries)
+    element.click()
+    time.sleep(.5)
+    print(element.get_attribute('aria-selected'))
+    map = driver.find_element(By.XPATH, '/html/body/app-root/div[1]/app-home/div/div/app-report[2]/div/div[2]/kendo-map/div/div[1]/div[2]/div[3]/child::*')
+    circles = map.find_elements(By.XPATH, './child::*')[2:]
+    print(len(circles))
+    return
