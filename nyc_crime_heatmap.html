@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NYC Crime Heatmap</title>
+</head>
+<body>
+
+
+<!-- Load require.js. Delete this if your page already loads require.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+<script type="application/vnd.jupyter.widget-state+json">
+{
+  "version_major": 2,
+  "version_minor": 0,
+  "state": {
+    "e5b76fb4d8c64a3b9b27ccb8a45e6702": {
+      "model_name": "DescriptionStyleModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "description_width": "initial"
+      }
+    },
+    "d436d54467cc4d4eae851bc18c645d13": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "fed49fbe34c34175982da9b841d383bb": {
+      "model_name": "DropdownModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [],
+        "_options_labels": [
+          "ALL CRIMES",
+          "ADMINISTRATIVE CODE",
+          "ALCOHOLIC BEVERAGE CONTROL LAW",
+          "ANTICIPATORY OFFENSES",
+          "ARSON",
+          "ASSAULT 3 & RELATED OFFENSES",
+          "BURGLAR'S TOOLS",
+          "BURGLARY",
+          "CANNABIS RELATED OFFENSES",
+          "CHILD ABANDONMENT/NON SUPPORT 1",
+          "CRIMINAL MISCHIEF & RELATED OF",
+          "CRIMINAL TRESPASS",
+          "DANGEROUS DRUGS",
+          "DANGEROUS WEAPONS",
+          "DISORDERLY CONDUCT",
+          "ESCAPE 3",
+          "FELONY ASSAULT",
+          "FORGERY",
+          "FRAUDS",
+          "FRAUDULENT ACCOSTING",
+          "GAMBLING",
+          "GRAND LARCENY",
+          "GRAND LARCENY OF MOTOR VEHICLE",
+          "HARRASSMENT 2",
+          "HOMICIDE-NEGLIGENT,UNCLASSIFIE",
+          "INTOXICATED & IMPAIRED DRIVING",
+          "INTOXICATED/IMPAIRED DRIVING",
+          "JOSTLING",
+          "KIDNAPPING & RELATED OFFENSES",
+          "MISCELLANEOUS PENAL LAW",
+          "MURDER & NON-NEGL. MANSLAUGHTER",
+          "NEW YORK CITY HEALTH CODE",
+          "OFF. AGNST PUB ORD SENSBLTY &",
+          "OFFENSES AGAINST PUBLIC ADMINI",
+          "OFFENSES AGAINST PUBLIC SAFETY",
+          "OFFENSES AGAINST THE PERSON",
+          "OFFENSES INVOLVING FRAUD",
+          "OFFENSES RELATED TO CHILDREN",
+          "OTHER OFFENSES RELATED TO THEFT",
+          "OTHER STATE LAWS",
+          "OTHER STATE LAWS (NON PENAL LAW)",
+          "PETIT LARCENY",
+          "PETIT LARCENY OF MOTOR VEHICLE",
+          "POSSESSION OF STOLEN PROPERTY",
+          "PROSTITUTION & RELATED OFFENSES",
+          "RAPE",
+          "ROBBERY",
+          "SEX CRIMES",
+          "THEFT-FRAUD",
+          "UNAUTHORIZED USE OF A VEHICLE",
+          "UNLAWFUL POSS. WEAP. ON SCHOOL",
+          "VEHICLE AND TRAFFIC LAWS"
+        ],
+        "description": "Crime Type:",
+        "index": 45,
+        "layout": "IPY_MODEL_d436d54467cc4d4eae851bc18c645d13",
+        "style": "IPY_MODEL_e5b76fb4d8c64a3b9b27ccb8a45e6702"
+      }
+    },
+    "0853c56713c642cbb1fdcd913baba447": {
+      "model_name": "DescriptionStyleModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "description_width": "initial"
+      }
+    },
+    "93121d77d9cc47a0b0b2912ad599987b": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "6090fa2e8f114c14a99f98bb307e1118": {
+      "model_name": "DatePickerModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [],
+        "description": "Start Date:",
+        "layout": "IPY_MODEL_93121d77d9cc47a0b0b2912ad599987b",
+        "step": 1,
+        "style": "IPY_MODEL_0853c56713c642cbb1fdcd913baba447",
+        "value": {
+          "year": 2024,
+          "month": 1,
+          "date": 16
+        }
+      }
+    },
+    "da511209fe10424e8b97037218e96fcc": {
+      "model_name": "DescriptionStyleModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "description_width": "initial"
+      }
+    },
+    "ee96a1423ac940389830a782ffc7f78a": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "651f50854482426da64a04b635a5e02a": {
+      "model_name": "DatePickerModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [],
+        "description": "End Date:",
+        "layout": "IPY_MODEL_ee96a1423ac940389830a782ffc7f78a",
+        "step": 1,
+        "style": "IPY_MODEL_da511209fe10424e8b97037218e96fcc",
+        "value": {
+          "year": 2025,
+          "month": 1,
+          "date": 16
+        }
+      }
+    },
+    "affa33d103474d9d907bbcd11985da4a": {
+      "model_name": "CheckboxStyleModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "description_width": "initial"
+      }
+    },
+    "fa0d0f935f7e48269aedbffb99312918": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "4e6bb9be8a1e4a6db0051d48af34701a": {
+      "model_name": "CheckboxModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [],
+        "description": "Show Individual Markers",
+        "layout": "IPY_MODEL_fa0d0f935f7e48269aedbffb99312918",
+        "style": "IPY_MODEL_affa33d103474d9d907bbcd11985da4a",
+        "value": true
+      }
+    },
+    "059f6cdefc2247daa42690ae7db33223": {
+      "model_name": "SliderStyleModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "description_width": "initial"
+      }
+    },
+    "1d5d3452e8cb472092cd0848fd2bf079": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "3d9f7ed7097d4a839cba6be74009b980": {
+      "model_name": "IntSliderModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [],
+        "description": "Heat Radius:",
+        "layout": "IPY_MODEL_1d5d3452e8cb472092cd0848fd2bf079",
+        "max": 30,
+        "min": 5,
+        "style": "IPY_MODEL_059f6cdefc2247daa42690ae7db33223",
+        "value": 15
+      }
+    },
+    "bc04a183db3b4658837084503ffaaa8e": {
+      "model_name": "SliderStyleModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "description_width": "initial"
+      }
+    },
+    "4cac725264234a3baf34497166b3e3e7": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "96375fab921941d1aa08c9dbab72ea48": {
+      "model_name": "IntSliderModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [],
+        "description": "Heat Blur:",
+        "layout": "IPY_MODEL_4cac725264234a3baf34497166b3e3e7",
+        "max": 30,
+        "min": 5,
+        "style": "IPY_MODEL_bc04a183db3b4658837084503ffaaa8e",
+        "value": 10
+      }
+    },
+    "684dfd495404443d81a1336b29bcc91d": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "55b5f0309a0345b7be145f495ed162ed": {
+      "model_name": "VBoxModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [
+          "widget-interact"
+        ],
+        "children": [
+          "IPY_MODEL_fed49fbe34c34175982da9b841d383bb",
+          "IPY_MODEL_6090fa2e8f114c14a99f98bb307e1118",
+          "IPY_MODEL_651f50854482426da64a04b635a5e02a",
+          "IPY_MODEL_4e6bb9be8a1e4a6db0051d48af34701a",
+          "IPY_MODEL_3d9f7ed7097d4a839cba6be74009b980",
+          "IPY_MODEL_96375fab921941d1aa08c9dbab72ea48",
+          "IPY_MODEL_a52430fcc0764e86b8fb343a1f96523f"
+        ],
+        "layout": "IPY_MODEL_684dfd495404443d81a1336b29bcc91d"
+      }
+    },
+    "4da96cdcf4f340e582aeae7d74c860c8": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "a52430fcc0764e86b8fb343a1f96523f": {
+      "model_name": "OutputModel",
+      "model_module": "@jupyter-widgets/output",
+      "model_module_version": "1.0.0",
+      "state": {
+        "_dom_classes": [],
+        "layout": "IPY_MODEL_4da96cdcf4f340e582aeae7d74c860c8",
+        "outputs": []
+      }
+    },
+    "0e554231b21e48498b074e89bdba7d9d": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "32bbaf809ab040738caaab409aa37c33": {
+      "model_name": "HTMLStyleModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {}
+    },
+    "5dbedf1e3a734e1d95b0f605c542f4d8": {
+      "model_name": "HTMLModel",
+      "model_module": "@jupyter-widgets/controls",
+      "model_module_version": "2.0.0",
+      "state": {
+        "_dom_classes": [],
+        "layout": "IPY_MODEL_0e554231b21e48498b074e89bdba7d9d",
+        "style": "IPY_MODEL_32bbaf809ab040738caaab409aa37c33",
+        "value": "<!DOCTYPE html>\n<html>\n<head>\n    \n    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n    \n        \u003cscript>\n            L_NO_TOUCH = false;\n            L_DISABLE_3D = false;\n        \u003c/script>\n    \n    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>\n    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>\n    \u003cscript src=\"https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js\">\u003c/script>\n    \u003cscript src=\"https://code.jquery.com/jquery-3.7.1.min.js\">\u003c/script>\n    \u003cscript src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js\">\u003c/script>\n    \u003cscript src=\"https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js\">\u003c/script>\n    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css\"/>\n    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css\"/>\n    <link rel=\"stylesheet\" href=\"https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css\"/>\n    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css\"/>\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css\"/>\n    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css\"/>\n    \n            <meta name=\"viewport\" content=\"width=device-width,\n                initial-scale=1.0, maximum-scale=1.0, user-scalable=no\" />\n            <style>\n                #map_ffcf2f7f4006d9abf8a784a05407c661 {\n                    position: relative;\n                    width: 100.0%;\n                    height: 100.0%;\n                    left: 0.0%;\n                    top: 0.0%;\n                }\n                .leaflet-container { font-size: 1rem; }\n            </style>\n        \n    \u003cscript src=\"https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js\">\u003c/script>\n</head>\n<body>\n    \n    \n            <div class=\"folium-map\" id=\"map_ffcf2f7f4006d9abf8a784a05407c661\" ></div>\n        \n</body>\n\u003cscript>\n    \n    \n            var map_ffcf2f7f4006d9abf8a784a05407c661 = L.map(\n                \"map_ffcf2f7f4006d9abf8a784a05407c661\",\n                {\n                    center: [40.7128, -74.006],\n                    crs: L.CRS.EPSG3857,\n                    ...{\n  \"zoom\": 11,\n  \"zoomControl\": true,\n  \"preferCanvas\": false,\n}\n\n                }\n            );\n\n            \n\n        \n    \n            var tile_layer_bd75f3bbbf9ba03c59df5073fc9da089 = L.tileLayer(\n                \"https://tile.openstreetmap.org/{z}/{x}/{y}.png\",\n                {\n  \"minZoom\": 0,\n  \"maxZoom\": 19,\n  \"maxNativeZoom\": 19,\n  \"noWrap\": false,\n  \"attribution\": \"\\u0026copy; \\u003ca href=\\\"https://www.openstreetmap.org/copyright\\\"\\u003eOpenStreetMap\\u003c/a\\u003e contributors\",\n  \"subdomains\": \"abc\",\n  \"detectRetina\": false,\n  \"tms\": false,\n  \"opacity\": 1,\n}\n\n            );\n        \n    \n            tile_layer_bd75f3bbbf9ba03c59df5073fc9da089.addTo(map_ffcf2f7f4006d9abf8a784a05407c661);\n        \n    \n            var heat_map_472d5368874a66c7a86700dc4c2f1a3a = L.heatLayer(\n                [[40.5766459780433, -73.9764803960699], [40.6713598203364, -73.8818110231735], [40.6488507469884, -73.951016510623], [40.6894642952604, -73.9240290899499], [40.6388651705916, -74.0227120876572], [40.6231883776008, -74.1492376947323], [40.7960743128304, -73.9670667458109], [40.7204418884676, -74.0067439741913], [40.7650240788333, -73.9848359497083], [40.7338967584511, -74.0053958373447], [40.6231883776008, -74.1492376947323], [40.6954388081238, -73.9832253756043], [40.6447209438691, -74.0770327198983], [40.5120382535219, -74.2497549524458], [40.5940190586592, -73.9608543158447], [40.6231883776008, -74.1492376947323], [40.7650240788333, -73.9848359497083], [40.8084177460021, -73.9524740603515], [40.7065483947783, -73.9504006335643], [40.7669956423899, -73.9639223035387], [40.7204418884676, -74.0067439741913], [40.6447209438691, -74.0770327198983], [40.6488507469884, -73.951016510623], [40.7431245994984, -73.9560680726795], [40.6305998504358, -73.9737053160275], [40.6447209438691, -74.0770327198983], [40.7535327012632, -73.9945368920152], [40.6447209438691, -74.0770327198983], [40.6447209438691, -74.0770327198983], [40.7669956423899, -73.9639223035387], [40.5766459780433, -73.9764803960699], [40.6022161657077, -74.0029507988395], [40.81591307653, -73.9451493066481], [40.6388651705916, -74.0227120876572], [40.8378421209284, -73.9196277517392], [40.81591307653, -73.9451493066481], [40.7204418884676, -74.0067439741913], [40.664121282631, -73.9477648403751], [40.6711300016904, -73.9135020552048], [40.6388651705916, -74.0227120876572], [40.8103518634571, -73.924942325642], [40.81591307653, -73.9451493066481], [40.6984738177025, -73.917768981221], [40.6711300016904, -73.9135020552048], [40.8378421209284, -73.9196277517392], [40.6281697437036, -73.9413587834752], [40.7204418884676, -74.0067439741913], [40.7894632995555, -73.9476340039424], [40.8828621313214, -73.9035744897024], [40.7434812638841, -73.8740035373971], [40.7434812638841, -73.8740035373971], [40.7565675846374, -73.8759315341335], [40.7565675846374, -73.8759315341335], [40.8694704770483, -73.8798608037303], [40.8873136344706, -73.8472717577564], [40.8103518634571, -73.924942325642], [40.6711300016904, -73.9135020552048], [40.7044350296655, -73.8937807141634], [40.6581577535544, -74.0004411548878], [40.7044350296655, -73.8937807141634], [40.6486135510607, -73.9052572032302], [40.8103518634571, -73.924942325642], [40.8229123084767, -73.8700413043181], [40.7426636084461, -73.9980491084798], [40.7623158004241, -73.8274480018593], [40.6027762300781, -73.7501173648331], [40.6799807384666, -73.7762339071953], [40.6258375452829, -73.9909448942322], [40.682398279333, -73.8400721577516], [40.666286, -73.734144], [40.7535327012632, -73.9945368920152], [40.7623158004241, -73.8274480018593], [40.6807856126343, -73.9744751162161], [40.6027762300781, -73.7501173648331], [40.7623158004241, -73.8274480018593], [40.7160120119955, -73.9973320301008], [40.7535327012632, -73.9945368920152], [40.682398279333, -73.8400721577516], [40.7960743128304, -73.9670667458109], [40.7426636084461, -73.9980491084798], [40.682398279333, -73.8400721577516], [40.8148034786258, -73.95628448405], [40.666286, -73.734144], [40.6954388081238, -73.9832253756043], [40.7372030985741, -73.9832725981497], [40.7650240788333, -73.9848359497083], [40.7650240788333, -73.9848359497083], [40.7163099917327, -73.9831660136947], [40.7650240788333, -73.9848359497083], [40.6954388081238, -73.9832253756043], [40.6954388081238, -73.9832253756043], [40.7650240788333, -73.9848359497083], [40.6305998504358, -73.9737053160275], [40.5766459780433, -73.9764803960699], [40.6894642952604, -73.9240290899499], [40.8103518634571, -73.924942325642], [40.6305998504358, -73.9737053160275], [40.5766459780433, -73.9764803960699], [40.5766459780433, -73.9764803960699], [40.5766459780433, -73.9764803960699], [40.6305998504358, -73.9737053160275], [40.7842519786623, -73.9748976664227], [40.6807856126343, -73.9744751162161], [40.6894642952604, -73.9240290899499], [40.6305998504358, -73.9737053160275], [40.5766459780433, -73.9764803960699], [40.7431245994984, -73.9560680726795], [40.7960743128304, -73.9670667458109], [40.7669956423899, -73.9639223035387], [40.6902236041959, -73.9602785860011], [40.6488507469884, -73.951016510623], [40.8222710411331, -73.911697780277], [40.8148034786258, -73.95628448405], [40.6488507469884, -73.951016510623], [40.6486135510607, -73.9052572032302], [40.8084177460021, -73.9524740603515], [40.7669956423899, -73.9639223035387], [40.7960743128304, -73.9670667458109], [40.8148034786258, -73.95628448405], [40.6488507469884, -73.951016510623], [40.8148034786258, -73.95628448405], [40.7960743128304, -73.9670667458109], [40.6488507469884, -73.951016510623], [40.7960743128304, -73.9670667458109], [40.8148034786258, -73.95628448405], [40.6902236041959, -73.9602785860011], [40.7431245994984, -73.9560680726795], [40.6488507469884, -73.951016510623], [40.8084177460021, -73.9524740603515], [40.8162058439227, -73.8960011932583], [40.8873136344706, -73.8472717577564], [40.6281697437036, -73.9413587834752], [40.7565675846374, -73.8759315341335], [40.81591307653, -73.9451493066481], [40.8286232400477, -73.9438488369889], [40.8229123084767, -73.8700413043181], [40.8009303727402, -73.9410982410066], [40.8407811088581, -73.9362453818218], [40.8009303727402, -73.9410982410066], [40.8694704770483, -73.8798608037303], [40.6281697437036, -73.9413587834752], [40.7065483947783, -73.9504006335643], [40.81591307653, -73.9451493066481], [40.8512131676868, -73.9352160519866], [40.8407811088581, -73.9362453818218], [40.81591307653, -73.9451493066481], [40.68900139556, -73.9450265328727], [40.664121282631, -73.9477648403751], [40.8009303727402, -73.9410982410066], [40.8512131676868, -73.9352160519866], [40.8694704770483, -73.8798608037303], [40.7434812638841, -73.8740035373971], [40.8873136344706, -73.8472717577564], [40.81591307653, -73.9451493066481], [40.68900139556, -73.9450265328727], [40.664121282631, -73.9477648403751], [40.8009303727402, -73.9410982410066], [40.6744956865259, -73.9305713255961], [40.8378421209284, -73.9196277517392], [40.7694951184418, -73.9150241703895], [40.8222710411331, -73.911697780277], [40.8535983673823, -73.9005768807295], [40.8103518634571, -73.924942325642], [40.8535983673823, -73.9005768807295], [40.8828621313214, -73.9035744897024], [40.6984738177025, -73.917768981221], [40.8103518634571, -73.924942325642], [40.6711300016904, -73.9135020552048], [40.8535983673823, -73.9005768807295], [40.8828621313214, -73.9035744897024], [40.7694951184418, -73.9150241703895], [40.8441566000203, -73.9006054489734], [40.8535983673823, -73.9005768807295], [40.6984738177025, -73.917768981221], [40.6894642952604, -73.9240290899499], [40.8222710411331, -73.911697780277], [40.7694951184418, -73.9150241703895], [40.6984738177025, -73.917768981221], [40.6486135510607, -73.9052572032302], [40.8535983673823, -73.9005768807295], [40.8103518634571, -73.924942325642], [40.8828621313214, -73.9035744897024], [40.8378421209284, -73.9196277517392], [40.8378421209284, -73.9196277517392], [40.8441566000203, -73.9006054489734], [40.6744956865259, -73.9305713255961], [40.6711300016904, -73.9135020552048], [40.6894642952604, -73.9240290899499], [40.8222710411331, -73.911697780277], [40.8103518634571, -73.924942325642], [40.6713598203364, -73.8818110231735], [40.8162058439227, -73.8960011932583], [40.8565767275976, -73.8438936779283], [40.8873136344706, -73.8472717577564], [40.8162058439227, -73.8960011932583], [40.8873136344706, -73.8472717577564], [40.8229123084767, -73.8700413043181], [40.8694704770483, -73.8798608037303], [40.8565767275976, -73.8438936779283], [40.8694704770483, -73.8798608037303], [40.8694704770483, -73.8798608037303], [40.8229123084767, -73.8700413043181], [40.7044350296655, -73.8937807141634], [40.6713598203364, -73.8818110231735], [40.7565675846374, -73.8759315341335], [40.8873136344706, -73.8472717577564], [40.8694704770483, -73.8798608037303], [40.8565767275976, -73.8438936779283], [40.8162058439227, -73.8960011932583], [40.6713598203364, -73.8818110231735], [40.8229123084767, -73.8700413043181], [40.8694704770483, -73.8798608037303], [40.7044350296655, -73.8937807141634], [40.8873136344706, -73.8472717577564], [40.7226409964758, -73.8515418216779], [40.7044350296655, -73.8937807141634], [40.8694704770483, -73.8798608037303], [40.8229123084767, -73.8700413043181], [40.8873136344706, -73.8472717577564], [40.8162058439227, -73.8960011932583], [40.8162058439227, -73.8960011932583], [40.7434812638841, -73.8740035373971], [40.8873136344706, -73.8472717577564], [40.7565675846374, -73.8759315341335], [40.8694704770483, -73.8798608037303], [40.8162058439227, -73.8960011932583], [40.8162058439227, -73.8960011932583], [40.8229123084767, -73.8700413043181], [40.7603961392658, -73.7675025349456], [40.666286, -73.734144], [40.7072398161698, -73.7927267255908], [40.7623158004241, -73.8274480018593], [40.69932415739, -73.831570887672], [40.666286, -73.734144], [40.7072398161698, -73.7927267255908], [40.7623158004241, -73.8274480018593], [40.7623158004241, -73.8274480018593], [40.7265293769835, -73.7348645378882], [40.6799807384666, -73.7762339071953], [40.7072398161698, -73.7927267255908], [40.6027762300781, -73.7501173648331], [40.7301130668694, -73.8109089148815], [40.7623158004241, -73.8274480018593], [40.666286, -73.734144], [40.7301130668694, -73.8109089148815], [40.6799807384666, -73.7762339071953], [40.7072398161698, -73.7927267255908], [40.666286, -73.734144], [40.8307223277672, -73.8271260588639], [40.6799807384666, -73.7762339071953], [40.666286, -73.734144]],\n                {\n  \"minOpacity\": 0.5,\n  \"maxZoom\": 18,\n  \"radius\": 15,\n  \"blur\": 10,\n  \"gradient\": {\n  \"0.4\": \"blue\",\n  \"0.65\": \"lime\",\n  \"0.8\": \"orange\",\n  \"1\": \"red\",\n},\n}\n            );\n        \n    \n            heat_map_472d5368874a66c7a86700dc4c2f1a3a.addTo(map_ffcf2f7f4006d9abf8a784a05407c661);\n        \n\u003c/script>\n</html>"
+      }
+    }
+  }
+}
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "55b5f0309a0345b7be145f495ed162ed"}
+</script>
+
+</body>
+</html>
